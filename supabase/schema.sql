@@ -57,7 +57,7 @@ drop policy if exists "authorized users read complaint evidence" on storage.obje
 drop policy if exists "citizens upload original evidence" on storage.objects;
 drop policy if exists "assigned staff upload resolution evidence" on storage.objects;
 
-a-- Storage paths are complaints/<complaint-uuid>/filename. The complaint UUID is segment 2.
+-- Storage paths are complaints/<complaint-uuid>/filename. The complaint UUID is segment 2.
 create policy "authorized users read complaint evidence"
 on storage.objects for select
 using (
