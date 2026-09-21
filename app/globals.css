@@ -1,0 +1,4 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root{background:#FFFFF0;color:#0A1931}*{box-sizing:border-box}body{margin:0;font-family:var(--font-inter),sans-serif;background:#FFFFF0}h1,h2,h3,h4{font-family:var(--font-playfair),serif}.serif{font-family:var(--font-playfair),serif}.glass{background:rgba(255,255,240,.72);backdrop-filter:blur(18px);border:1px solid rgba(197,168,128,.22)}.gold-line{height:1px;background:#C5A880}.leaflet-container{height:100%;width:100%;border-radius:16px}.leaflet-tile{filter:saturate(.55) sepia(.12)}

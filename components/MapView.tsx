@@ -1,0 +1,5 @@
+'use client'
+import { useEffect, useRef } from 'react'
+import 'leaflet/dist/leaflet.css'
+export type Issue={id:string;lat:number;lng:number;type:string;status:string;area:string;description:string}
+export function MapView({issues}:{issues:Issue[]}){const ref=useRef<HTMLDivElement>(null);useEffect(()=>{if(!ref.current)return;let map:any;import('leaflet').then(L=>{if(map)return;map=L.map(ref.current!).setView([20.5937,78.9629],5);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);issues.forEach(i=>{const color=i.status==='resolved'?'#64846d':i.status==='in_progress'?'#C5A880':'#ad665b';const icon=L.divIcon({className:'',html:`<div style="width:18px;height:18px;border-radius:50%;background:${color};border:3px solid #FFFFF0;box-shadow:0 2px 8px #0A193188"></div>`,iconSize:[18,18],iconAnchor:[9,9]});L.marker([i.lat,i.lng],{icon}).addTo(map).bindPopup(`<b>${i.type}</b><br/>${i.area}<br/><small>${i.status.replace('_',' ')}</small>`)})});return()=>{if(map)map.remove()}},[issues]);return <div ref={ref} className="h-full min-h-[460px] w-full overflow-hidden rounded-2xl"/>}
