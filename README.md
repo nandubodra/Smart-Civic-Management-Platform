@@ -2,14 +2,23 @@
 
 Premium civic issue reporting for villages, built with Next.js 14, Tailwind, Framer Motion, Leaflet and Supabase.
 
-Protected workflow:
+## Workflow
 
-- `/report` — authenticated citizens create reports
+- `/report` — authenticated citizens create reports with photo evidence, GPS, description, and optional AI category suggestion
 - `/account` — citizens see their personal report history
 - `/admin` — admins review, assign workers, and update statuses
 - `/worker` — workers see assigned jobs and update progress
 
-For worker assignment, create a `workers` row with `user_id` equal to the worker's Supabase Auth user ID and set that user's `users.role` to `worker`. Admins can then assign complaints from the Authority panel.
+## AI categorization
+
+The report form includes an AI-assisted suggestion step. Citizens always review the suggested category before submission. If `OPENAI_API_KEY` is configured on the server, `/api/classify` uses a vision model; without it, a safe local keyword fallback keeps the demo usable.
+
+```env
+OPENAI_API_KEY=your_server_only_key
+OPENAI_VISION_MODEL=gpt-4o-mini
+```
+
+Never prefix the OpenAI key with `NEXT_PUBLIC_`.
 
 ## Run locally
 
