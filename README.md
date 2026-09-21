@@ -1,10 +1,11 @@
-# SafaiSetu
+# SafaiSetu — private evidence
 
-The resolution evidence workflow is now included:
+Complaint evidence now uses a private Supabase Storage bucket and short-lived signed URLs.
 
-- Workers can upload an after photo from `/worker`.
-- Uploading evidence records `resolved_at`, optional resolution notes, and moves the complaint to `resolved`.
-- Citizens see a Before → After comparison and resolution timestamp in `/account`.
-- Original evidence remains linked through `photo_url`.
+- Database stores `photo_path` and `resolution_photo_path`, never public URLs.
+- Files are namespaced under `complaints/<complaint-id>/...`.
+- `/api/evidence` checks the authenticated Supabase session and complaint RLS before generating 10-minute signed URLs.
+- Citizens can access their own evidence; assigned workers and admins can access relevant evidence; anonymous visitors cannot.
+- Original and resolution uploads use Storage RLS policies tied to the complaint ID.
 
-Apply the updated `supabase/schema.sql` and make sure the `complaint-photos` Storage bucket exists. The current UI uses public URLs for evidence previews; for a private bucket, replace `getPublicUrl` with signed URLs and tighten Storage RLS policies before production deployment.
+Create a **private** Storage bucket named `complaint-photos`, apply `supabase/schema.sql`, and configure the environment variables before testing. Existing rows that contain old `photo_url` values will need a one-time migration to private paths or will no longer render in the new UI.
