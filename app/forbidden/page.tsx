@@ -1,0 +1,2 @@
+import Link from 'next/link'
+export default function ForbiddenPage() { return <div className="mx-auto max-w-2xl px-6 py-28 text-center"><p className="text-xs font-semibold uppercase tracking-[.25em] text-gold">Restricted area</p><h1 className="mt-5 text-6xl">Access reserved.</h1><p className="mx-auto mt-5 max-w-md leading-7 text-navy/55">This workspace is only available to authorised SafaiSetu staff.</p><Link href="/account" className="mt-8 inline-block rounded-full bg-navy px-6 py-4 text-sm font-semibold text-ivory">Return to account</Link></div> }

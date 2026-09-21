@@ -10,6 +10,13 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to enable persistence and phone OTP authentication. In Supabase, enable **Phone** under Authentication → Providers and configure an SMS provider. Apply `supabase/schema.sql` and create a public Storage bucket named `complaint-photos`.
+Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to enable persistence and phone OTP authentication. In Supabase, enable **Phone** under Authentication → Providers and configure an SMS provider. Apply `supabase/schema.sql`, create a public Storage bucket named `complaint-photos`, and apply Storage policies before using photo uploads.
 
-The interface includes a premium landing experience, phone OTP citizen login, geolocated report flow with photo upload, live Leaflet dashboard, and operational authority panel. Without Supabase credentials it runs with polished demo data for preview.
+Protected application routes:
+
+- `/report` — authenticated citizens only
+- `/account` — authenticated citizens only, with personal report history
+- `/admin` — users with `admin` role only
+- `/worker` — users with `worker` or `admin` role only
+
+The middleware refreshes Supabase sessions and enforces role-based access. Without Supabase credentials the public landing and demo map remain available, while protected routes redirect to login.
