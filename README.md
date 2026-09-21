@@ -2,6 +2,15 @@
 
 Premium civic issue reporting for villages, built with Next.js 14, Tailwind, Framer Motion, Leaflet and Supabase.
 
+Protected workflow:
+
+- `/report` — authenticated citizens create reports
+- `/account` — citizens see their personal report history
+- `/admin` — admins review, assign workers, and update statuses
+- `/worker` — workers see assigned jobs and update progress
+
+For worker assignment, create a `workers` row with `user_id` equal to the worker's Supabase Auth user ID and set that user's `users.role` to `worker`. Admins can then assign complaints from the Authority panel.
+
 ## Run locally
 
 ```bash
@@ -10,13 +19,4 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` to enable persistence and phone OTP authentication. In Supabase, enable **Phone** under Authentication → Providers and configure an SMS provider. Apply `supabase/schema.sql`, create a public Storage bucket named `complaint-photos`, and apply Storage policies before using photo uploads.
-
-Protected application routes:
-
-- `/report` — authenticated citizens only
-- `/account` — authenticated citizens only, with personal report history
-- `/admin` — users with `admin` role only
-- `/worker` — users with `worker` or `admin` role only
-
-The middleware refreshes Supabase sessions and enforces role-based access. Without Supabase credentials the public landing and demo map remain available, while protected routes redirect to login.
+Enable Phone authentication in Supabase, apply `supabase/schema.sql`, create the `complaint-photos` Storage bucket, and configure its authenticated upload policies.
